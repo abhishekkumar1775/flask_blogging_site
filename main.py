@@ -1,4 +1,4 @@
-# from crypt import methods
+
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -38,23 +38,33 @@ class Contact (db.Model):
 class Posts (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
+    tagline = db.Column(db.String(80), nullable=True)
     slug = db.Column(db.String(21), unique=True, nullable=False)
     content = db.Column(db.String(200), unique=True, nullable=False)
     date = db.Column(db.String(20), unique=False, nullable=True)
-    
-
-
+    img_file = db.Column(db.String(20), unique=False, nullable=True)
 
 
 @app.route("/")
 def home():
     print("Entered home")
-    return render_template("index.html",params =params)
+    post = Posts.query.filter_by().all()[0:params['no_of_posts']]
+    return render_template("index.html",params =params,posts = post)
 
 @app.route("/about")
 def about():
     name = "happpy"
     return render_template("about.html",params =params)
+
+@app.route("/dashboard",methods = ['GET','POST'])
+def dashboard():
+    cred = ""
+    if request.method == 'POST':
+        # redirect to admin panel
+        pass
+    else: 
+        return render_template("login.html",params =params, cred = "Wrong Credentials !!!!")    
+    
 
 @app.route("/post/<string:post_slug>",methods = ['GET'])
 def post_route(post_slug):
