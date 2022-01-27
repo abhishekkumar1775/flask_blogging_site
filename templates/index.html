@@ -45,7 +45,10 @@
                     <!-- Divider-->
                     <hr class="my-4" />
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                    <div class="d-flex justify-content-between mb-4">
+                        <a class="btn btn-primary text-uppercase" href="/{{start_token-params['no_of_posts']}}">Newer Posts →</a>
+                        <a class="btn btn-primary text-uppercase" href="/{{start_token+params['no_of_posts']}}">Older Posts →</a>
+                    </div>
                 </div>
             </div>
         </div>
