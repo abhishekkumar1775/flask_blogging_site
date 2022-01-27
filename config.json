@@ -1,0 +1,16 @@
+{
+    "params":
+    {
+        
+        "local_server":"True",
+        "local_uri":"mysql://root:@localhost/tracebacks",
+        "prod_uri" :"mysql://root:@localhost/tracebacks",
+        "fb_url":"myfb.com",
+        "tw_url":"mytw.com",
+        "gh_url":"https://github.com/abhishekkumar1775",
+        "blog_name" : "tracebacks",
+        "tag_line":"A Blog by Enterpreneurs",
+        "gmail-user":"abhishek260.ak@gmail.com",
+        "gmail-password":"Myn@meis149d"
+    }
+}
