@@ -1,7 +1,9 @@
 
 from flask import Flask, render_template, request ,session,redirect
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
 import json
+import os
 from datetime import datetime
 from flask_mail import Mail
 
@@ -12,6 +14,7 @@ params["log"]=0
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
+app.config['UPLOAD_FOLDER'] = params['upload_location']
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = '465',
@@ -153,6 +156,35 @@ def contact():
                 recipients = [params['gmail-user']],
                 body = message + '\n' + phone
                  )
+
+    print("going to contact page")
+    return render_template("contact.html",params =params)
+
+@app.route("/logout", methods= ['GET'])
+def logout():
+    session.pop('user')
+    params['log'] = 0
+    return redirect('/')
+
+@app.route("/delete/<string:id>", methods= ['GET'])
+def delete(id):
+    if(params['log']):
+        Posts.query.filter_by(id = id).delete()
+        db.session.commit()
+        redirect('/')
+    return redirect('/dashboard')
+
+@app.route("/uploader", methods= ['GET','POST'])
+def uploader():
+    print("Contact API is called")
+    if(params['log']):
+        if(request.method == 'POST'):
+            f = request.files['file1']
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
+            return "Uploaded Successfully"
+        
+        
+                 
 
     print("going to contact page")
     return render_template("contact.html",params =params)

@@ -23,7 +23,12 @@
                   <h1>Add A new post</h1>
                   <a class="btn btn-lg btn-primary text-uppercase" href="/edit/0">Create Post</a>
                   <hr>
-                  <h1>Upload A file</h1>   
+                  <h1>Upload A file</h1> 
+                  <form action="/uploader" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file1">
+                    <button class="btn btn-sm btn-primary text-uppercase" href="" type="submit">Submit</button>
+
+                  </form>  
       <hr>           
                   <br>
       <h1>Edit Posts</h1>
@@ -47,7 +52,7 @@
         <td>{{post.slug}}</td>
         <td>{{post.date}}</td>
         <td> <a href="/edit/{{post.id}}" class="btn btn-sm btn-primary text-uppercase" href="#!">Edit</a></td>
-        <td> <a class="btn btn-sm btn-primary text-uppercase" href="#!">Delete</a></td>
+        <td> <a class="btn btn-sm btn-primary text-uppercase" href="/delete/{{post.id}}">Delete</a></td>
         
       </tr>
       {% endfor%}

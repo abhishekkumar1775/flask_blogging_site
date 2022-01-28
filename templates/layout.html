@@ -31,11 +31,16 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/contact">Contact</a></li>
                         {%if params["log"] == 0%}
+                        
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/dashboard">Dashboard - Sign In Required</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/dashboard">Admin Login</a></li>
                         {% endif%}
                         {%if params["log"] == 1%}
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Admin LogOut!</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/dashboard">Dashboard - Logged In</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Admin LogOut! </a></li>
                         {% endif%}
+                        
                         
                     </ul>
                 </div>
