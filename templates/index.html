@@ -46,8 +46,12 @@
                     <hr class="my-4" />
                     <!-- Pager-->
                     <div class="d-flex justify-content-between mb-4">
-                        <a class="btn btn-primary text-uppercase" href="/{{start_token-params['no_of_posts']}}">Newer Posts →</a>
-                        <a class="btn btn-primary text-uppercase" href="/{{start_token+params['no_of_posts']}}">Older Posts →</a>
+                        {% if start_token != 0  %}
+                        <a class="btn btn-primary text-uppercase" href="/{{start_token-params['no_of_posts']}}">&larr; Newer Posts </a>
+                        {% endif %}
+                        {% if params['total_post'] > start_token + params['no_of_posts']%}
+                        <a class="btn btn-primary text-uppercase" href="/{{start_token+params['no_of_posts']}}">Older Posts &rarr;</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

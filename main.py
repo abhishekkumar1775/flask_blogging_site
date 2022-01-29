@@ -55,15 +55,23 @@ class Posts (db.Model):
 def home(token):
     print("Entered home")
     start_token = int(token)
-    
-    post = Posts.query.filter_by().all()[start_token:start_token+params['no_of_posts']]
+    if ('user' in session and session['user'] == params['admin']): 
+        params['log']=1
+    post = Posts.query.filter_by().all()
+    params['total_post'] = len(post)
+    post = post[start_token:start_token+params['no_of_posts']]
     return render_template("index.html",params =params,posts = post,start_token=start_token)
 
 @app.route("/")
 def home_def():
     print("Entered home")
-    
-    post = Posts.query.filter_by().all()[0:params['no_of_posts']]
+
+    if ('user' in session and session['user'] == params['admin']): 
+        params['log']=1
+    start_token =0
+    post = Posts.query.filter_by().all()
+    params['total_post'] = len(post)
+    post = post[start_token:start_token+params['no_of_posts']]
     return render_template("index.html",params =params,posts = post,start_token=0)
 
 @app.route("/about")
@@ -75,6 +83,8 @@ def about():
 def dashboard():
     cred = ""
 
+    if ('user' in session and session['user'] == params['admin']): 
+        params['log']=1
     post = Posts.query.all()
     if ('user' in session and session['user'] == params['admin']):
         return render_template("dashboard.html",params = params,posts = post)
@@ -102,6 +112,7 @@ def post_route(post_slug):
 @app.route("/edit/<string:id>",methods = ['GET','POST'])
 def edit(id):
     if ('user' in session and session['user'] == params['admin']): 
+        params['log']=1
         if request.method == 'POST':
             box_title = request.form.get('title')
             tline = request.form.get('tline')
@@ -113,6 +124,7 @@ def edit(id):
                 post = Posts(title = box_title,slug = slug,date = datetime.now(),content= content,tagline= tline,img_file = img_file)
                 db.session.add(post)
                 db.session.commit()
+                return redirect("/post/"+post.slug)
 
             else:
                 post = Posts.query.filter_by(id=id).first()
@@ -132,7 +144,7 @@ def edit(id):
                 return redirect("/post/"+post.slug)
 
         post = Posts.query.filter_by(id =id).first()
-        return render_template("edit.html",params = params,post = post)
+        return render_template("edit.html",params = params,post = post,id=id)
 
     else:
         return redirect("/dashboard")
@@ -168,6 +180,7 @@ def logout():
 
 @app.route("/delete/<string:id>", methods= ['GET'])
 def delete(id):
+    
     if(params['log']):
         Posts.query.filter_by(id = id).delete()
         db.session.commit()
